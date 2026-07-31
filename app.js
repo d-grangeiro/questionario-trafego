@@ -1,8 +1,8 @@
-// Configuração simples de "login"
+// Configuração simples de login
 // Em produção, isso deveria vir de um backend seguro.
-// Aqui é só para proteger minimamente o acesso.
+// Aqui é apenas para proteger minimamente o acesso.
 const LOGIN_EMAIL = "cliente@example.com";   // troque para o e-mail do cliente
-const LOGIN_PASSWORD = "SenhaForte123";      // troque para uma senha acordada
+const LOGIN_PASSWORD = "SenhaForte123";      // troque para a senha combinada
 
 // Perguntas (fácil de editar/adicionar)
 // type: "single" (múltipla escolha) ou "text"
@@ -11,7 +11,7 @@ const questions = [
     id: "identificacao",
     title: "Vamos começar: qual o seu nome e o nome da sua empresa?",
     description:
-      "Essas informações aparecerão internamente para identificarmos o seu projeto de tráfego.",
+      "Essas informações serão usadas internamente para identificarmos o seu projeto de tráfego.",
     type: "text",
     placeholder:
       "Exemplo: João Silva, Agência XYZ Marketing Digital",
@@ -111,40 +111,41 @@ document.addEventListener("DOMContentLoaded", () => {
   totalQuestionsEl.textContent = `Total: ${questions.length} perguntas`;
   avgTimeEl.textContent = `Tempo médio: ~${AVERAGE_MINUTES} minutos`;
 
-  // Login simples
- loginForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+  // Login simples com e-mail e senha
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
 
-  const emailVal = emailInput.value.trim();
-  const passwordVal = passwordInput.value.trim();
+    const emailVal = emailInput.value.trim();
+    const passwordVal = passwordInput.value.trim();
 
-  if (!emailVal || !passwordVal) {
-    loginError.textContent = "Preencha e-mail e senha.";
-    loginError.classList.remove("hidden");
-    return;
-  }
+    if (!emailVal || !passwordVal) {
+      loginError.textContent = "Preencha e-mail e senha.";
+      loginError.classList.remove("hidden");
+      return;
+    }
 
-  if (emailVal !== LOGIN_EMAIL || passwordVal !== LOGIN_PASSWORD) {
-    loginError.textContent = "E-mail ou senha inválidos. Verifique com o suporte.";
-    loginError.classList.remove("hidden");
-    return;
-  }
+    if (emailVal !== LOGIN_EMAIL || passwordVal !== LOGIN_PASSWORD) {
+      loginError.textContent = "E-mail ou senha inválidos. Verifique com o suporte.";
+      loginError.classList.remove("hidden");
+      return;
+    }
 
     // Login ok
     loginError.classList.add("hidden");
 
-  // Mostrar wizard
-  loginSection.classList.add("hidden");
-  wizardSection.classList.remove("hidden");
+    // Mostrar wizard
+    loginSection.classList.add("hidden");
+    wizardSection.classList.remove("hidden");
 
-  clientInfo.textContent = `${emailVal}`;
+    // Mostra e-mail no rodapé até termos nome/empresa
+    clientInfo.textContent = `${emailVal}`;
 
     // Render primeira pergunta
     currentStep = 0;
-  renderStep();
+    renderStep();
   });
 
   // Navegação
@@ -157,7 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   nextBtn.addEventListener("click", () => {
-    // Último passo = finalizar
     const isLast = currentStep === questions.length - 1;
     saveCurrentAnswer();
 
@@ -166,8 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (isLast) {
-      // Aqui você pode, por exemplo, exibir um resumo
-      // ou enviar as respostas por e-mail via algum backend no futuro.
+      // Aqui futuramente podemos enviar as respostas para um backend ou e-mail
       alert("Obrigado! Suas respostas foram registradas.\n\n(Lembrete: depois vamos integrar com envio por e-mail ou armazenamento seguro.)");
       return;
     }
@@ -208,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const optionsWrapper = document.createElement("div");
       optionsWrapper.className = "options";
 
-      question.options.forEach((opt, index) => {
+      question.options.forEach((opt) => {
         const label = document.createElement("label");
         label.className = "option-label";
 
@@ -267,6 +266,11 @@ document.addEventListener("DOMContentLoaded", () => {
         answers[questionId] = textarea.value.trim();
       }
     }
+
+    // Se for a pergunta de identificação, atualiza o rodapé com nome/empresa
+    if (questionId === "identificacao") {
+      updateClientInfoFromAnswers();
+    }
   }
 
   function validateCurrentStep() {
@@ -280,5 +284,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return true;
+  }
+
+  function updateClientInfoFromAnswers() {
+    const identificacao = answers["identificacao"];
+    if (!identificacao) return;
+
+    // Heurística simples: tenta separar por vírgula
+    const parts = identificacao.split(",");
+    if (parts.length >= 2) {
+      clientName = parts[0].trim();
+      companyName = parts.slice(1).join(",").trim();
+    } else {
+      clientName = identificacao.trim();
+      companyName = "";
+    }
+
+    if (clientName || companyName) {
+      clientInfo.textContent =
+        clientName && companyName
+          ? `${clientName} · ${companyName}`
+          : clientName || companyName;
+    }
   }
 });
