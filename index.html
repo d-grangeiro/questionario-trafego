@@ -15,29 +15,25 @@
         Acesse para responder ao questionário e nos ajudar a criar campanhas de tráfego com leads quentes.
       </p>
 
-      <form id="login-form">
-        <label>
-          Nome do cliente
-          <input type="text" id="clientName" required />
-        </label>
+     <form id="login-form">
+  <label>
+    E-mail
+    <input type="email" id="email" required />
+  </label>
 
-        <label>
-          Nome da empresa
-          <input type="text" id="companyName" required />
-        </label>
+  <label>
+    Senha
+    <input type="password" id="password" required />
+  </label>
 
-        <!-- "Senha simples" só para evitar acesso casual.
-             Depois podemos evoluir para algo mais forte. -->
-        <label>
-          Código de acesso
-          <input type="password" id="accessCode" required />
-        </label>
-
-        <button type="submit">Entrar</button>
-        <p id="login-error" class="error hidden">
-          Código de acesso inválido. Verifique com o suporte.
-        </p>
-      </form>
+  <button type="submit">Entrar</button>
+  <p class="helper-text">
+    Caso ainda não tenha acesso, entre em contacto com o suporte.
+  </p>
+  <p id="login-error" class="error hidden">
+    E-mail ou senha inválidos. Verifique e tente novamente.
+  </p>
+</form>
     </section>
 
     <!-- Tela do Questionário -->
