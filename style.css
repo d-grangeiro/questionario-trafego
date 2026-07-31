@@ -1,0 +1,254 @@
+:root {
+  --bg: #050816;
+  --bg-card: #0f172a;
+  --accent: #6366f1;
+  --accent-soft: rgba(99, 102, 241, 0.15);
+  --accent-strong: #22d3ee;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --error: #f97373;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #1f2937 0, #020617 50%, #000 100%);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 700px;
+  padding: 16px;
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+  border-radius: 18px;
+  padding: 24px 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  animation: fadeInUp 0.4s ease-out;
+}
+
+h1, h2 {
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--text);
+  outline: none;
+  font-size: 0.95rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4);
+}
+
+button {
+  border: none;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 12px 30px rgba(79, 70, 229, 0.4);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 40px rgba(79, 70, 229, 0.6);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+  box-shadow: none;
+}
+
+.error {
+  color: var(--error);
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Wizard */
+
+.wizard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.wizard-header h2 {
+  font-size: 1.3rem;
+}
+
+.wizard-header p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.progress-container {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.7);
+  transition: width 0.25s ease-out;
+}
+
+#question-container {
+  min-height: 180px;
+  padding: 16px;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.1), transparent 55%);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.question-title {
+  font-size: 1rem;
+  margin: 0 0 10px;
+}
+
+.question-description {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.nav-buttons #prev-btn {
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--muted);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: none;
+}
+
+.nav-buttons #prev-btn:hover {
+  background: rgba(15, 23, 42, 1);
+}
+
+.wizard-footer {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Responsivo */
+
+@media (max-width: 600px) {
+  .card {
+    padding: 20px 16px;
+  }
+
+  .wizard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .meta {
+    align-items: flex-start;
+  }
+
+  .nav-buttons {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+}
+
+/* Animações */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
