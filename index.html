@@ -2,45 +2,34 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Onboarding de Tráfego Pago</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnóstico de Tráfego Pago</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app-container">
-    <!-- Tela de Login -->
     <section id="login-section" class="card">
       <h1>Área do Cliente</h1>
-      <p class="subtitle">
-        Acesse para responder ao questionário e nos ajudar a criar campanhas de tráfego com leads quentes.
-      </p>
-
-     <form id="login-form">
-  <label>
-    E-mail
-    <input type="email" id="email" required />
-  </label>
-
-  <label>
-    Senha
-    <input type="password" id="password" required />
-  </label>
-
-  <button type="submit">Entrar</button>
-  <p class="helper-text">
-    Caso ainda não tenha acesso, entre em contacto com o suporte.
-  </p>
-  <p id="login-error" class="error hidden">
-    E-mail ou senha inválidos. Verifique e tente novamente.
-  </p>
-</form>
+      <p class="subtitle">Acesse para responder ao questionário.</p>
+      <form id="login-form">
+        <label>
+          E-mail
+          <input type="email" id="email" required />
+        </label>
+        <label>
+          Senha
+          <input type="password" id="password" required />
+        </label>
+        <button type="submit">Entrar</button>
+        <p class="helper-text">Caso ainda não tenha acesso, entre em contacto com o suporte.</p>
+        <p id="login-error" class="error hidden">E-mail ou senha inválidos.</p>
+      </form>
     </section>
 
-    <!-- Tela do Questionário -->
     <section id="wizard-section" class="card hidden">
       <header class="wizard-header">
         <div>
-          <h2>Briefing de Tráfego Pago</h2>
+          <h2>Formulário de Diagnóstico</h2>
           <p id="question-counter">Pergunta 1 de 1</p>
         </div>
         <div class="meta">
@@ -49,23 +38,17 @@
         </div>
       </header>
 
-      <!-- Barra de progresso -->
       <div class="progress-container">
         <div id="progress-bar"></div>
       </div>
 
-      <!-- Pergunta atual -->
-      <div id="question-container">
-        <!-- Renderizado via JS -->
-      </div>
+      <div id="question-container"></div>
 
-      <!-- Navegação -->
       <div class="nav-buttons">
         <button id="prev-btn" type="button">Voltar</button>
         <button id="next-btn" type="button">Próximo</button>
       </div>
 
-      <!-- Info do cliente fixada no rodapé -->
       <footer class="wizard-footer">
         <span id="client-info"></span>
       </footer>
