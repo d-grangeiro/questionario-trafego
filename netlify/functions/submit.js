@@ -1,3 +1,5 @@
+const nodemailer = require("nodemailer");
+
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
@@ -16,6 +18,16 @@ exports.handler = async (event) => {
       };
     }
 
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: String(process.env.SMTP_SECURE || "false") === "true",
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+
     const subject = `Novo questionário: ${payload.companyName || payload.clientName || payload.email}`;
 
     const answerLines = Object.entries(payload.answers)
@@ -31,7 +43,12 @@ exports.handler = async (event) => {
       answerLines,
     ].join("\n");
 
-    console.log({ subject, body });
+    await transporter.sendMail({
+      from: process.env.MAIL_FROM,
+      to: process.env.MAIL_TO,
+      subject,
+      text: body,
+    });
 
     return {
       statusCode: 200,
